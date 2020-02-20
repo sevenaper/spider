@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ee9f041-3257-4b9e-9942-a91375dc2677" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/consts/consts.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crons/crons.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/excepetions/exceptions.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/comment.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spider.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/spider.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/spider.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +28,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1XyypIaIuAefZvKUyHRxF735MXT" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -32,15 +41,24 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
+    <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$" />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="367" y="75" key="#Build_Tags_&amp;_Vendoring" timestamp="1582032972547">
+    <state x="367" y="75" key="#Build_Tags_&amp;_Vendoring" timestamp="1582204180086">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="367" y="75" key="#Build_Tags_&amp;_Vendoring/0.0.1549.831@0.0.1549.831" timestamp="1582032972547" />
+    <state x="367" y="75" key="#Build_Tags_&amp;_Vendoring/0.0.1549.831@0.0.1549.831" timestamp="1582204180085" />
+    <state x="367" y="75" key="#Go_Modules_(vgo)" timestamp="1582203165664">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="367" y="75" key="#Go_Modules_(vgo)/0.0.1549.831@0.0.1549.831" timestamp="1582203165664" />
+    <state x="463" y="15" width="622" height="801" key="find.popup" timestamp="1582204025891">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="463" y="15" width="622" height="801" key="find.popup/0.0.1549.831@0.0.1549.831" timestamp="1582204025891" />
   </component>
 </project>
