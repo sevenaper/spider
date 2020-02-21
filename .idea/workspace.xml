@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ee9f041-3257-4b9e-9942-a91375dc2677" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/consts/consts.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crons/crons.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/excepetions/exceptions.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/comment.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spider.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/spider.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/spider.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,9 +37,31 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="go.vgo" />
+  </component>
+  <component name="RunManager">
+    <configuration name="go build spider" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="spider" />
+      <working_directory value="$PROJECT_DIR$/" />
+      <kind value="PACKAGE" />
+      <filePath value="$PROJECT_DIR$/main.go" />
+      <package value="spider" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build spider" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>true</integration-enabled>
+    <proxy>https://goproxy.io</proxy>
   </component>
   <component name="WindowStateProjectService">
     <state x="367" y="75" key="#Build_Tags_&amp;_Vendoring" timestamp="1582204180086">
@@ -56,6 +72,34 @@
       <screen x="0" y="0" width="1549" height="831" />
     </state>
     <state x="367" y="75" key="#Go_Modules_(vgo)/0.0.1549.831@0.0.1549.831" timestamp="1582203165664" />
+    <state x="522" y="280" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1582206339732">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="522" y="280" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1549.831@0.0.1549.831" timestamp="1582206339732" />
+    <state width="1506" height="213" key="GridCell.Tab.0.bottom" timestamp="1582288699287">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state width="1506" height="213" key="GridCell.Tab.0.bottom/0.0.1549.831@0.0.1549.831" timestamp="1582288699287" />
+    <state width="1506" height="213" key="GridCell.Tab.0.center" timestamp="1582288699287">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state width="1506" height="213" key="GridCell.Tab.0.center/0.0.1549.831@0.0.1549.831" timestamp="1582288699287" />
+    <state width="1506" height="213" key="GridCell.Tab.0.left" timestamp="1582288699287">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state width="1506" height="213" key="GridCell.Tab.0.left/0.0.1549.831@0.0.1549.831" timestamp="1582288699287" />
+    <state width="1506" height="213" key="GridCell.Tab.0.right" timestamp="1582288699287">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state width="1506" height="213" key="GridCell.Tab.0.right/0.0.1549.831@0.0.1549.831" timestamp="1582288699287" />
+    <state x="284" y="58" key="SettingsEditor" timestamp="1582288547340">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="284" y="58" key="SettingsEditor/0.0.1549.831@0.0.1549.831" timestamp="1582288547340" />
+    <state x="367" y="149" key="Vcs.Push.Dialog.v2" timestamp="1582204724605">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="367" y="149" key="Vcs.Push.Dialog.v2/0.0.1549.831@0.0.1549.831" timestamp="1582204724605" />
     <state x="463" y="15" width="622" height="801" key="find.popup" timestamp="1582204025891">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
