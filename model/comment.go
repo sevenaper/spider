@@ -10,7 +10,7 @@ type CommentSpider struct {
 
 type VersionSpider struct {
 	CommentId string
-	AppName string
+	AppName   string
 	Version   string
 }
 

@@ -6,6 +6,7 @@ import (
 	"github.com/tidwall/gjson"
 	"log"
 	"spider/model"
+	"spider/utils"
 )
 
 //CommentGraph 评论存储结构
@@ -75,7 +76,7 @@ func NewAppleSpiders() *AppleSpiders {
 	return spiders
 }
 
-//InitDownloader 初始化下载器
+//InitDownloader 初始化评论下载器
 func (s *AppleCommentSpider) InitDownloader() {
 	s.Downloader = colly.NewCollector()
 	s.Downloader.UserAgent = "iTunes/11.0 (Windows; Microsoft Windows 7 Business Edition Service Pack 1 (Build 7601)) AppleWebKit/536.27.1"
@@ -134,15 +135,24 @@ func (s *AppleCommentSpider) ParseCommentContent(g CommentGraph) {
 
 //CrawlComment 爬取评论
 func CrawlComment(s *AppleCommentSpider, g CommentGraph, t string) {
-	url := "https://itunes.apple.com/WebObjects/MZStore.woa/wa/userReviewsRow?cc=cn&id=" + t + "&displayable-kind=11&startIndex=0&endIndex=100&sort=0&appVersion=all"
+	params := model.CommentParams{
+		AppID:      t,
+		StartIndex: 0,
+		EndIndex:   200,
+	}
+	url := utils.GetCommentURL(t, &params)
 	s.Crawl(url)
 	s.ParseCommentContent(g)
+	fmt.Println(len(g))
+	for k := range g {
+		fmt.Println(k)
+	}
 }
 
-//InitDownloader 初始化下载器
+//InitDownloader 初始化版本号下载器
 func (s *AppleVersionSpider) InitDownloader() {
 	s.Downloader = colly.NewCollector()
-	s.Downloader.UserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3682.0 Safari/537.36"
+	s.Downloader.UserAgent = "iTunes/11.0 (Windows; Microsoft Windows 7 Business Edition Service Pack 1 (Build 7601)) AppleWebKit/536.27.1"
 	s.Downloader.OnRequest(func(r *colly.Request) {
 		r.Headers.Set("Host", "itunes.apple.com")
 		r.Headers.Set("Origin", "https://itunes.apple.com")
@@ -155,7 +165,7 @@ func (s *AppleVersionSpider) InitDownloader() {
 	s.Downloader.OnResponse(func(r *colly.Response) {
 		s.StatusCode = r.StatusCode
 		s.Resp = string(r.Body)
-		fmt.Println(s.Resp, s.StatusCode)
+		//fmt.Println(s.Resp, s.StatusCode)
 	})
 
 	s.Downloader.OnError(func(resp *colly.Response, errHttp error) {
