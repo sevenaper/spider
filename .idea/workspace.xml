@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ee9f041-3257-4b9e-9942-a91375dc2677" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/model/config.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/database/config.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consts/consts.go" beforeDir="false" afterPath="$PROJECT_DIR$/consts/consts.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crons/crons.go" beforeDir="false" afterPath="$PROJECT_DIR$/crons/crons.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exceptions/exceptions.go" beforeDir="false" afterPath="$PROJECT_DIR$/exceptions/exceptions.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/params.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/params.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/database/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/database/config.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

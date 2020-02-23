@@ -15,7 +15,7 @@ var (
 )
 
 func InitDB() {
-	db, err := gorm.Open("mysql", "root:root9898008@tcp(134.175.33.133:3306)/gowatcher?charset=utf8&parseTime=True&loc=Local")
+	db, err := gorm.Open("mysql", "")
 	if err == nil {
 		db.SingularTable(true)
 		dbReader = db
