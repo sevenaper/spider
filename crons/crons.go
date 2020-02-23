@@ -21,5 +21,5 @@ func CronJobs() {
 	})
 	c.Start()
 
-	select{}
+	select {}
 }
