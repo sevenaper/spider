@@ -4,6 +4,7 @@ import (
 	"spider/consts"
 	"spider/model"
 	"strconv"
+	"time"
 )
 
 //GetCommentURL 获取评论URL
@@ -30,4 +31,17 @@ func GetVersionPages(count int) int {
 		pages = count/50 + 1
 	}
 	return pages
+}
+func ConvertGoTimeToStd(src string) string {
+	const GoStr = "2006-01-02T15:04:05+08:00"
+	t, _ := time.Parse(GoStr, src)
+	return t.Format(consts.TIME_STR)
+}
+
+//FillLastCrawlTime 填充最后爬取时间
+func FillLastCrawlTime() string {
+	curTime := time.Now()
+	duration, _ := time.ParseDuration("-1h")
+	eTime := curTime.Add(duration)
+	return eTime.Format(consts.TIME_STR)
 }
