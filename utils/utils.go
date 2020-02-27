@@ -32,6 +32,8 @@ func GetVersionPages(count int) int {
 	}
 	return pages
 }
+
+//ConvertGoTimeToStd 将golang的日期转换为标准日期格式，不带T那种
 func ConvertGoTimeToStd(src string) string {
 	const GoStr = "2006-01-02T15:04:05+08:00"
 	t, _ := time.Parse(GoStr, src)
