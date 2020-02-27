@@ -1,19 +1,17 @@
 package main
 
 import (
-	"spider/consts"
+
+	"spider/crons"
+	"spider/service"
 )
 
 func main() {
-	S := NewAppleCommentSpider()
-	G := NewCommentGraph()
+	S := service.NewAppleCommentSpider()
+	G := service.NewCommentGraph()
 	//定义任务列表，ID映射可查看consts.go
-	K := []string{"抖音"}
-
-	T := []string{}
-	for _, v := range K {
-		T = append(T, consts.GetAppMap()[v])
-	}
-	StartCrawl(S, G, T)
+	K := service.GlobalTaskLoader.GetTaskMap()
+	service.StartCrawl(S, G, K)
+	crons.CronJobs()
 
 }
