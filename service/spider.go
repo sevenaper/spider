@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"github.com/gocolly/colly"
 	"github.com/tidwall/gjson"
+	"log"
 	"spider/consts"
 	"spider/model"
 	"spider/utils"
-
-	"log"
+	"time"
 )
 
 //CommentGraph 评论存储结构
@@ -128,7 +128,7 @@ func (s *AppleCommentSpider) ParseCommentContent(g CommentGraph) {
 		comment.Title = val.Get("title").String()
 		comment.Content = val.Get("body").String()
 		comment.CommentId = val.Get("userReviewId").String()
-		comment.PublishTime = val.Get("date").String()
+		comment.PublishTime = val.Get("date").Time().In(time.Local).Format(consts.TIME_STR)
 		comment.Rating = val.Get("rating").Int()
 		g[comment.CommentId] = comment
 		return true
@@ -140,15 +140,11 @@ func CrawlComment(s *AppleCommentSpider, g CommentGraph, t string) {
 	params := model.CommentParams{
 		AppID:      t,
 		StartIndex: 0,
-		EndIndex:   200,
+		EndIndex:   1,
 	}
 	url := utils.GetCommentURL(t, &params)
 	s.Crawl(url)
 	s.ParseCommentContent(g)
-	fmt.Println(len(g))
-	for k := range g {
-		fmt.Println(k)
-	}
 }
 
 //InitDownloader 初始化版本号下载器
@@ -183,9 +179,10 @@ func Crawl(k *AppleCommentSpider, g CommentGraph, t *model.Task) {
 
 //StartCrawl 爬虫任务
 func StartCrawl(k *AppleCommentSpider, g CommentGraph, tasks TaskDict) {
-	for _, t := range tasks {
-		if t.Status == consts.NORMAL {
-			Crawl(k, g, t)
-		}
-	}
+	//for _, t := range tasks {
+	//	if t.Status == consts.NORMAL {
+	//		Crawl(k, g, t)
+	//	}
+	//}
+	CrawlComment(k, g, "1142110895")
 }

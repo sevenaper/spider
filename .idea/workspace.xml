@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ee9f041-3257-4b9e-9942-a91375dc2677" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/test/db_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spider.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/utils.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/utils.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/spider.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/spider.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +65,8 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/$GOPATH/src/golang.org/appengine" />
     </ignored-roots>
+    <MESSAGE value="db finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="db finished" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -85,37 +85,41 @@
       <screen x="0" y="0" width="1549" height="831" />
     </state>
     <state x="522" y="280" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1549.831@0.0.1549.831" timestamp="1582206339732" />
-    <state x="396" y="8" key="CommitChangelistDialog2" timestamp="1582805321537">
+    <state x="396" y="8" key="CommitChangelistDialog2" timestamp="1582805360301">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="396" y="8" key="CommitChangelistDialog2/0.0.1549.831@0.0.1549.831" timestamp="1582805321537" />
-    <state width="1506" height="213" key="GridCell.Tab.0.bottom" timestamp="1582379652503">
+    <state x="396" y="8" key="CommitChangelistDialog2/0.0.1549.831@0.0.1549.831" timestamp="1582805360301" />
+    <state width="1506" height="213" key="GridCell.Tab.0.bottom" timestamp="1582805360384">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state width="1506" height="213" key="GridCell.Tab.0.bottom/0.0.1549.831@0.0.1549.831" timestamp="1582379652503" />
-    <state width="1506" height="213" key="GridCell.Tab.0.center" timestamp="1582379652503">
+    <state width="1506" height="213" key="GridCell.Tab.0.bottom/0.0.1549.831@0.0.1549.831" timestamp="1582805360384" />
+    <state width="1506" height="213" key="GridCell.Tab.0.center" timestamp="1582805360384">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state width="1506" height="213" key="GridCell.Tab.0.center/0.0.1549.831@0.0.1549.831" timestamp="1582379652503" />
-    <state width="1506" height="213" key="GridCell.Tab.0.left" timestamp="1582379652503">
+    <state width="1506" height="213" key="GridCell.Tab.0.center/0.0.1549.831@0.0.1549.831" timestamp="1582805360384" />
+    <state width="1506" height="213" key="GridCell.Tab.0.left" timestamp="1582805360384">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state width="1506" height="213" key="GridCell.Tab.0.left/0.0.1549.831@0.0.1549.831" timestamp="1582379652503" />
-    <state width="1506" height="213" key="GridCell.Tab.0.right" timestamp="1582379652503">
+    <state width="1506" height="213" key="GridCell.Tab.0.left/0.0.1549.831@0.0.1549.831" timestamp="1582805360384" />
+    <state width="1506" height="213" key="GridCell.Tab.0.right" timestamp="1582805360384">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state width="1506" height="213" key="GridCell.Tab.0.right/0.0.1549.831@0.0.1549.831" timestamp="1582379652503" />
+    <state width="1506" height="213" key="GridCell.Tab.0.right/0.0.1549.831@0.0.1549.831" timestamp="1582805360384" />
     <state x="284" y="58" key="SettingsEditor" timestamp="1582379465434">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
     <state x="284" y="58" key="SettingsEditor/0.0.1549.831@0.0.1549.831" timestamp="1582379465434" />
-    <state x="367" y="149" key="Vcs.Push.Dialog.v2" timestamp="1582288918041">
+    <state x="367" y="149" key="Vcs.Push.Dialog.v2" timestamp="1582805369795">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="367" y="149" key="Vcs.Push.Dialog.v2/0.0.1549.831@0.0.1549.831" timestamp="1582288918041" />
+    <state x="367" y="149" key="Vcs.Push.Dialog.v2/0.0.1549.831@0.0.1549.831" timestamp="1582805369795" />
     <state x="463" y="15" width="622" height="801" key="find.popup" timestamp="1582204025891">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
     <state x="463" y="15" width="622" height="801" key="find.popup/0.0.1549.831@0.0.1549.831" timestamp="1582204025891" />
+    <state x="432" y="69" width="672" height="676" key="search.everywhere.popup" timestamp="1582889811297">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="432" y="69" width="672" height="676" key="search.everywhere.popup/0.0.1549.831@0.0.1549.831" timestamp="1582889811297" />
   </component>
 </project>

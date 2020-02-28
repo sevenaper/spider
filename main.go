@@ -1,16 +1,14 @@
 package main
 
 import (
-
-	"spider/crons"
+	"fmt"
 	"spider/service"
-	"spider/service/database"
 )
 
 func Init() {
-	database.InitDB()
-	service.InitTaskService()
-	crons.InitCrons()
+	//database.InitDB()
+	//service.InitTaskService()
+	//crons.InitCrons()
 }
 
 func main() {
@@ -18,8 +16,12 @@ func main() {
 	G := service.NewCommentGraph()
 
 	//任务列表
-	K := service.GlobalTaskLoader.GetTaskMap()
-	service.StartCrawl(S, G, K)
+	//K := service.GlobalTaskLoader.GetTaskMap()
+	//service.StartCrawl(S, G, K)
+	service.StartCrawl(S, G, make(service.TaskDict))
+	for _, v := range G {
+		fmt.Printf("%+v\n", v.PublishTime)
+	}
 
-	crons.CronJobs()
+	//crons.CronJobs()
 }
