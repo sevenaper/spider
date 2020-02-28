@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6ee9f041-3257-4b9e-9942-a91375dc2677" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/spider.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/spider.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consts/consts.go" beforeDir="false" afterPath="$PROJECT_DIR$/consts/consts.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +65,8 @@
       <path value="$PROJECT_DIR$/$GOPATH/src/golang.org/appengine" />
     </ignored-roots>
     <MESSAGE value="db finished" />
-    <option name="LAST_COMMIT_MESSAGE" value="db finished" />
+    <MESSAGE value="fix date" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix date" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -85,10 +85,10 @@
       <screen x="0" y="0" width="1549" height="831" />
     </state>
     <state x="522" y="280" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1549.831@0.0.1549.831" timestamp="1582206339732" />
-    <state x="396" y="8" key="CommitChangelistDialog2" timestamp="1582805360301">
+    <state x="396" y="8" key="CommitChangelistDialog2" timestamp="1582889871573">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="396" y="8" key="CommitChangelistDialog2/0.0.1549.831@0.0.1549.831" timestamp="1582805360301" />
+    <state x="396" y="8" key="CommitChangelistDialog2/0.0.1549.831@0.0.1549.831" timestamp="1582889871573" />
     <state width="1506" height="213" key="GridCell.Tab.0.bottom" timestamp="1582805360384">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
