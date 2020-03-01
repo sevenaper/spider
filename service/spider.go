@@ -119,8 +119,10 @@ func (s *AppleCommentSpider) Crawl(url string) error {
 	return nil
 }
 
-//ParseCommentContent 解析评论内容
-func (s *AppleCommentSpider) ParseCommentContent(g CommentGraph) {
+//ParseFirstCommentContent 解析第一次爬取的评论内容，并返回最近评论的时间
+func (s *AppleCommentSpider) ParseFirstCommentContent(g CommentGraph, t string) (string, bool) {
+	recentTime := t
+	hit := false
 	base := s.Result()
 	data := gjson.Get(base, "userReviewList")
 	data.ForEach(func(key, val gjson.Result) bool {
@@ -128,23 +130,70 @@ func (s *AppleCommentSpider) ParseCommentContent(g CommentGraph) {
 		comment.Title = val.Get("title").String()
 		comment.Content = val.Get("body").String()
 		comment.CommentId = val.Get("userReviewId").String()
-		comment.PublishTime = val.Get("date").Time().In(time.Local).Format(consts.TIME_STR)
+		comment.PublishTime = val.Get("date").Time().In(time.Local).Format(consts.TimeStr)
 		comment.Rating = val.Get("rating").Int()
-		g[comment.CommentId] = comment
+		if comment.PublishTime > t {
+			g[comment.CommentId] = comment
+			if comment.PublishTime > recentTime {
+				recentTime = comment.PublishTime
+			}
+		} else {
+			hit = true
+		}
 		return true
 	})
+
+	return recentTime, hit
+}
+
+//ParsePagesCommentContent 解析爬取的评论内容，并返回是否爬取到上次时间点
+func (s *AppleCommentSpider) ParsePagesCommentContent(g CommentGraph, t string) bool {
+	hit := false
+	base := s.Result()
+	data := gjson.Get(base, "userReviewList")
+	data.ForEach(func(key, val gjson.Result) bool {
+		comment := &model.CommentSpider{}
+		comment.Title = val.Get("title").String()
+		comment.Content = val.Get("body").String()
+		comment.CommentId = val.Get("userReviewId").String()
+		comment.PublishTime = val.Get("date").Time().In(time.Local).Format(consts.TimeStr)
+		comment.Rating = val.Get("rating").Int()
+		if comment.PublishTime > t {
+			g[comment.CommentId] = comment
+		} else {
+			hit = true
+		}
+		return true
+	})
+	return hit
 }
 
 //CrawlComment 爬取评论
-func CrawlComment(s *AppleCommentSpider, g CommentGraph, t string) {
+func CrawlComment(s *AppleCommentSpider, g CommentGraph, t *model.Task) {
 	params := model.CommentParams{
-		AppID:      t,
+		AppID:      t.AppID,
 		StartIndex: 0,
-		EndIndex:   1,
+		EndIndex:   consts.PageSize,
 	}
-	url := utils.GetCommentURL(t, &params)
+	url := utils.GetCommentURL(&params)
 	s.Crawl(url)
-	s.ParseCommentContent(g)
+	recentTime, hit := s.ParseFirstCommentContent(g, t.LastCrawlTime)
+
+	//如果第一次就命中，则无需多页爬取
+	for !hit {
+		params.StartIndex += consts.PageSize
+		params.EndIndex += consts.PageSize
+		url = utils.GetCommentURL(&params)
+		s.Crawl(url)
+		hit = s.ParsePagesCommentContent(g, t.LastCrawlTime)
+	}
+
+	fmt.Println(len(g))
+
+	if recentTime > t.LastCrawlTime {
+		t.LastCrawlTime = recentTime
+	}
+	fmt.Println(t.LastCrawlTime)
 }
 
 //InitDownloader 初始化版本号下载器
@@ -174,15 +223,19 @@ func (s *AppleVersionSpider) InitDownloader() {
 
 //Crawl 执行爬取流程
 func Crawl(k *AppleCommentSpider, g CommentGraph, t *model.Task) {
-
+	CrawlComment(k, g, t)
 }
 
-//StartCrawl 爬虫任务
+//StartCrawl 筛选爬虫任务
 func StartCrawl(k *AppleCommentSpider, g CommentGraph, tasks TaskDict) {
 	//for _, t := range tasks {
-	//	if t.Status == consts.NORMAL {
+	//	if t.Status == consts.Normal {
 	//		Crawl(k, g, t)
 	//	}
 	//}
-	CrawlComment(k, g, "1142110895")
-}
+	t := &model.Task{
+		AppID:         "1142110895",
+		LastCrawlTime: "2019-11-09 16:55:07",
+		Status:        consts.Normal,
+	}
+	CrawlComment(k, g, t)
