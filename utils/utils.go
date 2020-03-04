@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"crypto/md5"
+	"fmt"
 	"spider/consts"
 	"spider/model"
 	"strconv"
@@ -46,4 +48,9 @@ func FillLastCrawlTime() string {
 	duration, _ := time.ParseDuration("-1h")
 	eTime := curTime.Add(duration)
 	return eTime.Format(consts.TimeStr)
+}
+
+//GenMainKey 根据不同appId和commentId规则生成全局唯一ID
+func GenMainKey(key string) string {
+	return fmt.Sprintf("%x", md5.Sum([]byte(key)))
 }

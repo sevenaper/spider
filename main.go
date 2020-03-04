@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-	"spider/crons"
 	"spider/service"
 )
 
@@ -13,14 +11,13 @@ func Init() {
 }
 
 func main() {
-	S := service.NewAppleCommentSpider()
-	G := service.NewCommentGraph()
+	S := service.NewAppleSpiders()
+	G := service.NewGraph()
 
 	//任务列表
 	//K := service.GlobalTaskLoader.GetTaskMap()
 	//service.StartCrawl(S, G, K)
 	service.StartCrawl(S, G, make(service.TaskDict))
 
-
-	crons.CronJobs()
+	//crons.CronJobs()
 }

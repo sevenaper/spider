@@ -17,6 +17,9 @@ type CommentGraph map[string]*model.CommentSpider
 //VersionGraph 版本号存储结构
 type VersionGraph map[string]string
 
+//Graph 总存储结构
+type Graph map[string]*model.Comment
+
 //AppleCommentSpider 苹果应用商店评论爬虫
 type AppleCommentSpider struct {
 	Req        string
@@ -41,15 +44,9 @@ type AppleSpiders struct {
 	AppleVersionSpider *AppleVersionSpider
 }
 
-//NewCommentGraph 初始化评论存储对象
-func NewCommentGraph() CommentGraph {
-	g := make(CommentGraph)
-	return g
-}
-
-//NewVersionGraph 初始化版本号存储对象
-func NewVersionGraph() VersionGraph {
-	g := make(VersionGraph)
+//NewGraph 初始化存储对象
+func NewGraph() Graph {
+	g := make(Graph)
 	return g
 }
 
@@ -131,7 +128,7 @@ func (s *AppleCommentSpider) ParseFirstCommentContent(g CommentGraph, t string) 
 		comment.Content = val.Get("body").String()
 		comment.CommentId = val.Get("userReviewId").String()
 		comment.PublishTime = val.Get("date").Time().In(time.Local).Format(consts.TimeStr)
-		comment.Rating = val.Get("rating").Int()
+		comment.Rating = val.Get("rating").String()
 		if comment.PublishTime > t {
 			g[comment.CommentId] = comment
 			if comment.PublishTime > recentTime {
@@ -157,7 +154,7 @@ func (s *AppleCommentSpider) ParsePagesCommentContent(g CommentGraph, t string) 
 		comment.Content = val.Get("body").String()
 		comment.CommentId = val.Get("userReviewId").String()
 		comment.PublishTime = val.Get("date").Time().In(time.Local).Format(consts.TimeStr)
-		comment.Rating = val.Get("rating").Int()
+		comment.Rating = val.Get("rating").String()
 		if comment.PublishTime > t {
 			g[comment.CommentId] = comment
 		} else {
@@ -169,7 +166,8 @@ func (s *AppleCommentSpider) ParsePagesCommentContent(g CommentGraph, t string) 
 }
 
 //CrawlComment 爬取评论
-func CrawlComment(s *AppleCommentSpider, g CommentGraph, t *model.Task) {
+func CrawlComment(s *AppleCommentSpider, g CommentGraph, t *model.Task) int {
+	tmp := make(CommentGraph)
 	params := model.CommentParams{
 		AppID:      t.AppID,
 		StartIndex: 0,
@@ -177,7 +175,7 @@ func CrawlComment(s *AppleCommentSpider, g CommentGraph, t *model.Task) {
 	}
 	url := utils.GetCommentURL(&params)
 	s.Crawl(url)
-	recentTime, hit := s.ParseFirstCommentContent(g, t.LastCrawlTime)
+	recentTime, hit := s.ParseFirstCommentContent(tmp, t.LastCrawlTime)
 
 	//如果第一次就命中，则无需多页爬取
 	for !hit {
@@ -185,15 +183,20 @@ func CrawlComment(s *AppleCommentSpider, g CommentGraph, t *model.Task) {
 		params.EndIndex += consts.PageSize
 		url = utils.GetCommentURL(&params)
 		s.Crawl(url)
-		hit = s.ParsePagesCommentContent(g, t.LastCrawlTime)
+		hit = s.ParsePagesCommentContent(tmp, t.LastCrawlTime)
 	}
-
-	fmt.Println(len(g))
 
 	if recentTime > t.LastCrawlTime {
 		t.LastCrawlTime = recentTime
 	}
-	fmt.Println(t.LastCrawlTime)
+
+	if len(tmp) > 0 {
+		for k, v := range tmp {
+			g[t.AppID+"|"+k] = v
+		}
+	}
+
+	return len(tmp)
 }
 
 //InitDownloader 初始化版本号下载器
@@ -221,13 +224,78 @@ func (s *AppleVersionSpider) InitDownloader() {
 	})
 }
 
-//Crawl 执行爬取流程
-func Crawl(k *AppleCommentSpider, g CommentGraph, t *model.Task) {
-	CrawlComment(k, g, t)
+//Crawl 获取指定链接的内容
+func (s *AppleVersionSpider) Crawl(url string) error {
+	if err := s.Downloader.Visit(url); err != nil {
+		log.Println("Visit:", url, " [error]", err)
+		return err
+	}
+	s.Downloader.Wait()
+	log.Println("Visit:", url, " [success]")
+	return nil
+}
+
+//Result 获取响应字符串
+func (s *AppleVersionSpider) Result() string {
+	return s.Resp
+}
+
+//ParseVersionContent 解析版本号
+func (s *AppleVersionSpider) ParseVersionContent(g VersionGraph) {
+	base := s.Result()
+	data := gjson.Get(base, "feed").Get("entry")
+	data.ForEach(func(key, val gjson.Result) bool {
+		commentId := val.Get("id").Get("label").String()
+		version := val.Get("im:version").Get("label").String()
+		g[commentId] = version
+		return true
+	})
+}
+
+//CrawlVersion 爬取版本号
+func CrawlVersion(s *AppleVersionSpider, g VersionGraph, params model.VersionParams) {
+	url := utils.GetVersionURL(&params)
+	s.Crawl(url)
+	s.ParseVersionContent(g)
+	time.Sleep(1 * time.Second)
+}
+
+//Crawl 执行爬虫流程
+func Crawl(k *AppleSpiders, g Graph, t *model.Task) {
+	cg := make(CommentGraph)
+	num := CrawlComment(k.AppleCommentSpider, cg, t)
+	if num == 0 {
+		return
+	}
+
+	vg := make(VersionGraph)
+	pages := utils.GetVersionPages(num)
+	params := model.VersionParams{}
+	params.AppID = t.AppID
+	for page := 1; page <= pages; page++ {
+		params.Page = page
+		CrawlVersion(k.AppleVersionSpider, vg, params)
+	}
+
+	for k, v := range cg {
+		comment := &model.Comment{
+			CommentId:   v.CommentId,
+			MainId:      utils.GenMainKey(k),
+			Content:     v.Title + "|" + v.Content,
+			Rating:      v.Rating,
+			Version:     "UNKNOWN",
+			PublishTime: v.PublishTime,
+			CrawlTime:   t.LastCrawlTime,
+		}
+		if _, ok := vg[v.CommentId]; ok {
+			comment.Version = vg[v.CommentId]
+		}
+		g[k] = comment
+	}
 }
 
 //StartCrawl 筛选爬虫任务
-func StartCrawl(k *AppleCommentSpider, g CommentGraph, tasks TaskDict) {
+func StartCrawl(k *AppleSpiders, g Graph, tasks TaskDict) {
 	//for _, t := range tasks {
 	//	if t.Status == consts.Normal {
 	//		Crawl(k, g, t)
@@ -235,7 +303,8 @@ func StartCrawl(k *AppleCommentSpider, g CommentGraph, tasks TaskDict) {
 	//}
 	t := &model.Task{
 		AppID:         "1142110895",
-		LastCrawlTime: "2019-11-09 16:55:07",
+		LastCrawlTime: "2019-11-09 18:55:07",
 		Status:        consts.Normal,
 	}
-	CrawlComment(k, g, t)
+	Crawl(k, g, t)
+}
