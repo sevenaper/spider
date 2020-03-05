@@ -176,6 +176,7 @@ func CrawlComment(s *AppleCommentSpider, g CommentGraph, t *model.Task) int {
 	url := utils.GetCommentURL(&params)
 	s.Crawl(url)
 	recentTime, hit := s.ParseFirstCommentContent(tmp, t.LastCrawlTime)
+	time.Sleep(1 * time.Second)
 
 	//如果第一次就命中，则无需多页爬取
 	for !hit {
@@ -184,6 +185,7 @@ func CrawlComment(s *AppleCommentSpider, g CommentGraph, t *model.Task) int {
 		url = utils.GetCommentURL(&params)
 		s.Crawl(url)
 		hit = s.ParsePagesCommentContent(tmp, t.LastCrawlTime)
+		time.Sleep(1 * time.Second)
 	}
 
 	if recentTime > t.LastCrawlTime {
@@ -296,15 +298,21 @@ func Crawl(k *AppleSpiders, g Graph, t *model.Task) {
 
 //StartCrawl 筛选爬虫任务
 func StartCrawl(k *AppleSpiders, g Graph, tasks TaskDict) {
-	//for _, t := range tasks {
-	//	if t.Status == consts.Normal {
-	//		Crawl(k, g, t)
-	//	}
-	//}
-	t := &model.Task{
+	t1 := &model.Task{
 		AppID:         "1142110895",
 		LastCrawlTime: "2019-11-09 18:55:07",
 		Status:        consts.Normal,
 	}
-	Crawl(k, g, t)
+	t2 := &model.Task{
+		AppID:         "1142110895",
+		LastCrawlTime: "2019-11-09 18:55:07",
+		Status:        consts.Normal,
+	}
+	tasks[t1.AppID] = t1
+	tasks[t2.AppID] = t2
+	for _, t := range tasks {
+		if t.Status == consts.Normal {
+			Crawl(k, g, t)
+		}
+	}
 }
